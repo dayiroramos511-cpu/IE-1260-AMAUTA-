@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IE 1260</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4ec;--surface:#fff;--ink:#14213d;--muted:#4a5568;--line:#e3ddcc;--navy:#14213d;--gold:#f2b705;--hill1:#2c3e6b;--hill2:#4a5f94;
+--c1:#6d3fc0;--c2:#1f9d55;--c3:#1f6fd1;--c4:#e8741a;--c5:#b88400;--c6:#1769c9;--c7:#d6247f;--c8:#13919a;--c9:#5b34c4;--c10:#c0226f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1526;--surface:#18203a;--ink:#f1efe8;--muted:#b3bbd0;--line:#2a3558;--hill1:#1a2547;--hill2:#26356a;--c1:#a98bf0;--c2:#4ccb85;--c3:#6aa6f5;--c4:#f5a05a;--c5:#f2b705;--c6:#6aa6f5;--c7:#f06aae;--c8:#45c9d2;--c9:#a98bf0;--c10:#f06aae}}
+:root[data-theme="dark"]{--bg:#0f1526;--surface:#18203a;--ink:#f1efe8;--muted:#b3bbd0;--line:#2a3558;--hill1:#1a2547;--hill2:#26356a;--c1:#a98bf0;--c2:#4ccb85;--c3:#6aa6f5;--c4:#f5a05a;--c5:#f2b705;--c6:#6aa6f5;--c7:#f06aae;--c8:#45c9d2;--c9:#a98bf0;--c10:#f06aae}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:Fredoka,Nunito,system-ui,sans-serif;line-height:1.15;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button{font-family:inherit}
+/* top bar */
+.bar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:20}
+.bar .wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px}
+.logo{font:700 1.15rem Fredoka,sans-serif;background:var(--gold);color:var(--navy);padding:3px 12px;border-radius:8px 8px 16px 16px;text-decoration:none;margin-right:6px}
+nav{display:flex;gap:2px;flex:1;overflow-x:auto}
+nav a{color:#dfe4f2;text-decoration:none;font-weight:700;font-size:.9rem;padding:7px 11px;border-radius:999px;white-space:nowrap}
+nav a[aria-current="page"]{background:#fff;color:var(--navy)}
+.sw{display:flex;align-items:center;gap:8px}
+.sw>span{font-weight:800;font-size:.85rem;color:#dfe4f2}
+.switch{display:inline-flex;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.35);border-radius:999px;padding:3px;gap:2px}
+.switch button{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:.9rem;border:0;background:none;color:#fff;padding:8px 14px;min-height:40px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.switch button:hover{background:rgba(255,255,255,.18)}
+.switch button[aria-pressed="true"]{background:var(--gold);color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.switch svg{flex:none}
+.hint{background:var(--gold);color:var(--navy);text-align:center;font-weight:800;font-size:.88rem;padding:5px 12px;display:none}
+body:not([data-mode="both"]) .hint{display:block}
+nav{min-width:0}
+@media(max-width:700px){.sw{width:100%;order:3}.switch{flex:1}.switch button{flex:1;justify-content:center;padding:8px 6px}.sw>span{display:none}}
+/* hero */
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:44px 0 0}
+.hero .wrap{position:relative;z-index:2;padding-bottom:140px}
+.hero h1{font-size:clamp(2.4rem,9vw,4.6rem);font-weight:700}
+.hero h2{font-size:clamp(1.1rem,3.4vw,1.6rem);font-weight:500;color:var(--gold);margin:10px 0 12px}
+.hero p{max-width:36em;margin:0;opacity:.9}
+.hills{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:160px;z-index:1}
+/* doors */
+.doors{display:grid;gap:14px;grid-template-columns:1fr;margin-top:-92px;position:relative;z-index:3}
+@media(min-width:760px){.doors{grid-template-columns:1fr 1fr}}
+.door{display:block;text-decoration:none;color:inherit;background:var(--surface);border:2px solid var(--ink);border-radius:20px;padding:22px}
+.door h2{font-size:1.5rem;margin-bottom:6px}
+.door p{margin:0 0 14px;color:var(--muted)}
+.door .go{display:inline-block;font-weight:800;background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px}
+.door.a{border-color:var(--c2)}.door.b{border-color:var(--c4)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.quick a{text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:8px 14px;border-radius:999px;font-weight:700;font-size:.93rem}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:30px}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{border-left:5px solid var(--gold);padding:4px 12px}
+.stat b{font:700 1.8rem Fredoka,sans-serif;display:block}
+.stat span{color:var(--muted);font-size:.9rem}
+/* sections */
+.sec{padding:40px 0 20px}
+.sec h2{font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:8px}
+.lead{color:var(--muted);max-width:38em;margin:0 0 22px}
+.view{display:none}.view.on{display:block}
+.steps{display:grid;gap:10px;grid-template-columns:1fr;margin:0;padding:0;list-style:none}
+@media(min-width:760px){.steps{grid-template-columns:repeat(4,1fr)}}
+.steps li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.steps b{font-family:Fredoka,sans-serif;display:block;margin-bottom:2px}
+/* guided */
+.prog{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0 14px}
+.prog i{display:block;height:100%;background:var(--c2);width:0;transition:width .3s}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.dots button{width:38px;height:38px;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 .95rem Fredoka,sans-serif;cursor:pointer}
+.dots button.done{background:var(--c2);border-color:var(--c2);color:#fff}
+.dots button[aria-current="step"]{outline:3px solid var(--gold);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-top:8px solid var(--c);border-radius:18px;padding:22px}
+.card h3{font-size:1.5rem;display:flex;gap:12px;align-items:center}
+.n{flex:none;width:40px;height:40px;border-radius:50%;background:var(--c);color:var(--bg);font:700 1.15rem Fredoka,sans-serif;display:grid;place-items:center}
+.card .sub{color:var(--muted);margin:6px 0 12px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tag{font-size:.8rem;font-weight:800;border:1.5px solid var(--c);color:var(--c);border-radius:99px;padding:2px 10px}
+.card h4{margin:14px 0 4px;font:700 1rem Fredoka,sans-serif}
+.card ul{margin:0;padding-left:20px}
+.where{border-top:1px dashed var(--line);margin-top:14px;padding-top:10px}
+.where div{margin:6px 0}.where b{color:var(--c)}
+body[data-mode="fis"] .dg,body[data-mode="dig"] .fs{display:none}
+.nav2{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{font-weight:800;font-size:.95rem;border:2px solid var(--ink);background:var(--surface);color:var(--ink);padding:9px 18px;border-radius:999px;cursor:pointer}
+.btn.p{background:var(--ink);color:var(--bg)}
+.btn:disabled{opacity:.35;cursor:default}
+/* free */
+.search{width:100%;font:600 1.05rem Nunito,sans-serif;padding:13px 18px;border-radius:999px;border:2px solid var(--ink);background:var(--surface);color:var(--ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}
+.chips button{font-weight:700;font-size:.88rem;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 13px;border-radius:99px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.grid{grid-template-columns:1fr 1fr 1fr}}
+details{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--c);border-radius:14px}
+summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+summary::-webkit-details-marker{display:none}
+summary h3{font-size:1.08rem}
+summary .s{display:block;color:var(--muted);font-size:.88rem}
+summary::after{content:"+";margin-left:auto;font:700 1.4rem Fredoka,sans-serif;color:var(--c)}
+details[open] summary::after{content:"−"}
+.body{padding:0 16px 16px}.body ul{margin:0 0 10px;padding-left:20px}
+.empty{padding:24px;border:2px dashed var(--line);border-radius:14px;color:var(--muted)}
+/* formats */
+.pair{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:760px){.pair{grid-template-columns:1fr 1fr}}
+.fmt{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;transition:opacity .25s}
+.fmt h3{font-size:1.3rem;margin-bottom:4px}.fmt p{margin:0 0 12px;color:var(--muted)}
+.tabs{display:flex;flex-direction:column;gap:6px}
+.tab{padding:9px 14px;border-radius:6px 14px 14px 6px;color:#fff;font-weight:800;font-size:.95rem}
+.tab:nth-child(1){background:#e8a21a;color:#2b1d00}.tab:nth-child(2){background:#7b4fd0;margin-left:10px}.tab:nth-child(3){background:#1a8a95;margin-left:20px}.tab:nth-child(4){background:#2a8f50;margin-left:30px}.tab:nth-child(5){background:#cc3a52;margin-left:40px}
+.dash{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dash li{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-weight:700;font-size:.92rem}
+.dash small{display:block;font-weight:400;color:var(--muted)}
+body[data-mode="fis"] .fmt.d,body[data-mode="dig"] .fmt.f{opacity:.28}
+/* questions + budget */
+.qs{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:760px){.qs{grid-template-columns:repeat(5,1fr)}}
+.q{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--qc);border-radius:12px;padding:14px}
+.q h3{font-size:1.02rem;margin-bottom:6px}.q p{margin:0 0 6px;font-size:.9rem;color:var(--muted)}
+.q ul{margin:0;padding-left:18px;font-size:.9rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:22px}
+.calc h3{margin-bottom:4px}
+.rows{display:grid;gap:10px;grid-template-columns:1fr 1fr;margin:14px 0}
+@media(min-width:760px){.rows{grid-template-columns:repeat(4,1fr)}}
+.rows label{font-weight:700;font-size:.88rem;display:block}
+.rows input{width:100%;font:700 1.05rem Nunito,sans-serif;padding:9px 10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.res{font-weight:800;font-size:1.1rem}
+.bars{display:flex;height:16px;border-radius:99px;overflow:hidden;background:var(--line);margin-top:10px}
+.bars i{display:block;height:100%}
+.lema{margin:44px 0 0;background:var(--gold);color:var(--navy);text-align:center;padding:28px 20px;font:700 clamp(1.3rem,4.5vw,1.9rem) Fredoka,sans-serif}
+footer{background:var(--navy);color:#dfe4f2;padding:26px 0 36px;font-size:.93rem}footer b{color:#fff}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-mode="both">
+
+<div class="bar"><div class="wrap">
+  <a class="logo" href="#inicio">IE 1260</a>
+  <nav aria-label="Secciones">
+    <a href="#inicio">Inicio</a><a href="#ordenado">Recorrido ordenado</a><a href="#libre">Explorar libre</a><a href="#formatos">Físico y digital</a><a href="#ruta">Mi ruta</a><a href="#colegio">El colegio</a>
+  </nav>
+  <div class="sw"><span id="swl">Ver portafolio:</span><div class="switch" role="group" aria-labelledby="swl">
+<button type="button" data-m="both" aria-pressed="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="11" height="11" rx="2"/><rect x="10" y="10" width="11" height="11" rx="2"/></svg>Ambos</button>
+<button type="button" data-m="fis" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Físico</button>
+<button type="button" data-m="dig" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Digital</button>
+</div></div>
+</div>
+<div class="hint" id="hint" role="status"></div></div>
+
+<!-- INICIO -->
+<main>
+<section class="view on" id="v-inicio">
+  <header class="hero">
+    <div class="wrap">
+      <h1>Mi Ruta de Futuro Inteligente</h1>
+      <h2>Portafolio interactivo físico y digital STEAM+H · 4.° de secundaria</h2>
+      <p>I.E.N.° 1260 “El Amauta”, Huaycán – Ate. Aquí encuentras todo lo que va en tu portafolio. Entra como prefieras.</p>
+    </div>
+    <svg class="hills" viewBox="0 0 1200 170" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90 L140 40 L260 80 L420 20 L560 85 L700 35 L860 90 L1010 45 L1200 95 V170 H0Z" fill="var(--hill2)"/><path d="M0 130 L180 85 L340 125 L520 80 L700 130 L900 90 L1080 128 L1200 100 V170 H0Z" fill="var(--hill1)"/><g fill="#f2b705" opacity=".85"><rect x="90" y="132" width="12" height="9"/><rect x="260" y="124" width="12" height="9"/><rect x="430" y="118" width="12" height="9"/><rect x="610" y="126" width="12" height="9"/><rect x="800" y="121" width="12" height="9"/><rect x="980" y="125" width="12" height="9"/></g><path d="M0 150 L200 128 L400 150 L620 124 L840 150 L1040 130 L1200 148 V170 H0Z" fill="var(--bg)"/></svg>
+  </header>
+  <div class="wrap">
+    <div class="doors">
+      <a class="door a" href="#ordenado"><h2>Recorrido ordenado</h2><p>Te llevo estación por estación, de la 1 a la 10, con qué hacer, qué entregar y cómo se evalúa. Guarda tu avance.</p><span class="go">Empezar en la estación 1</span></a>
+      <a class="door b" href="#libre"><h2>Explorar libremente</h2><p>Busca por palabra, filtra por área (Ciencia, Tecnología, Ingeniería, Arte, Matemática, Humanidades) o por formato físico o digital.</p><span class="go">Buscar en el portafolio</span></a>
+    </div>
+    <div class="quick" aria-label="Otras entradas">
+      <a href="#formatos">¿Qué lleva la carpeta y qué el tablero?</a><a href="#ruta">Las 5 preguntas y mi presupuesto</a><a href="#colegio">Sobre el colegio</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>10</b><span>estaciones de aprendizaje</span></div>
+      <div class="stat"><b>6</b><span>áreas: STEAM+H</span></div>
+      <div class="stat"><b>5</b><span>preguntas guía de vida</span></div>
+      <div class="stat"><b>2</b><span>formatos: carpeta y tablero</span></div>
+    </div>
+    <div class="sec">
+      <h2>Cómo se usa el portafolio</h2>
+      <p class="lead">Cuatro pasos que se repiten en cada estación.</p>
+      <ol class="steps">
+        <li><b>1. Mira</b>Lee qué se pide en la estación y su pregunta guía.</li>
+        <li><b>2. Haz</b>Trabaja con tu equipo y registra con fotos, bocetos o datos.</li>
+        <li><b>3. Guarda</b>Pon el producto en la carpeta física y sube su versión al tablero digital.</li>
+        <li><b>4. Reflexiona</b>Anota qué aprendiste y qué mejorarías.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ORDENADO -->
+<section class="view" id="v-ordenado"><div class="wrap sec">
+  <h2>Recorrido ordenado</h2>
+  <p class="lead">Avanza con los botones o salta a cualquier número. Marca cada estación cuando la termines.</p>
+  <div class="prog" aria-hidden="true"><i id="pbar"></i></div>
+  <div id="pcount" class="lead" style="margin:0 0 10px"></div>
+  <div class="dots" id="dots"></div>
+  <div id="stage"></div>
+  <div class="nav2"><button class="btn" id="prev" type="button">Anterior</button><button class="btn" id="done" type="button">Marcar como terminada</button><button class="btn p" id="next" type="button">Siguiente</button></div>
+</div></section>
+
+<!-- LIBRE -->
+<section class="view" id="v-libre"><div class="wrap sec">
+  <h2>Explorar libremente</h2>
+  <p class="lead">Escribe lo que buscas (por ejemplo “encuesta”, “presupuesto”, “video”) o usa los filtros.</p>
+  <input class="search" id="q" type="search" placeholder="Buscar en las 10 estaciones y las 5 preguntas" aria-label="Buscar">
+  <div class="chips" id="chips"></div>
+  <div class="lead" id="rc" style="margin-bottom:10px"></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<!-- FORMATOS -->
+<section class="view" id="v-formatos"><div class="wrap sec">
+  <h2>Dos formatos, un solo portafolio</h2>
+  <p class="lead">Lo que armas con las manos y lo que subes a la plataforma se complementan. Usa el selector de arriba para resaltar uno.</p>
+  <div class="pair">
+    <div class="fmt f"><h3>Carpeta física</h3><p>Archivador con separadores de colores y un cuaderno donde escribes “Mis sueños también son un plan”.</p>
+      <div class="tabs"><div class="tab">Quién soy</div><div class="tab">Mis fortalezas</div><div class="tab">Mis metas</div><div class="tab">Mi presupuesto</div><div class="tab">Mis decisiones</div></div></div>
+    <div class="fmt d"><h3>Tablero digital</h3><p>Dashboard personal para ver tu progreso y decidir con información. Se abre en computadora, con la app móvil o con un código QR.</p>
+      <ul class="dash"><li>Quién soy<small>perfil</small></li><li>Mis fortalezas<small>talentos y logros</small></li><li>Mis metas<small>corto, mediano y largo plazo</small></li><li>Mi presupuesto<small>ingresos, gastos, ahorro</small></li><li>Mis decisiones<small>opciones y consecuencias</small></li><li>Evidencias<small>videos, infografías, informes</small></li></ul></div>
+  </div>
+  <h3 style="margin:26px 0 10px">Recursos que acompañan</h3>
+  <ul class="steps"><li><b>Plataforma digital</b>Tu tablero con todas las estaciones.</li><li><b>App móvil</b>Consulta tu avance desde el celular.</li><li><b>Recursos en la nube</b>Archivos, videos y modelos.</li><li><b>Portafolio físico</b>La carpeta que presentas en la feria.</li></ul>
+</div></section>
+
+<!-- RUTA -->
+<section class="view" id="v-ruta"><div class="wrap sec">
+  <h2>Mi ruta: cinco preguntas</h2>
+  <p class="lead">Conócete, decide y construye tu mejor versión. Tu futuro no es un sueño, es un plan.</p>
+  <div class="qs" id="qs"></div>
+  <div class="calc">
+    <h3>Probemos con un presupuesto</h3>
+    <p class="lead" style="margin:0">Valores de ejemplo en soles (S/). Cámbialos por los tuyos para ver cuánto te queda.</p>
+    <div class="rows">
+      <div><label for="i1">Ingresos (mensual)</label><input id="i1" type="number" min="0" value="150"></div>
+      <div><label for="i2">Gastos básicos</label><input id="i2" type="number" min="0" value="100"></div>
+      <div><label for="i3">Ahorro</label><input id="i3" type="number" min="0" value="20"></div>
+      <div><label for="i4">Inversión educativa</label><input id="i4" type="number" min="0" value="30"></div>
+    </div>
+    <div class="res" id="res"></div>
+    <div class="bars" id="bars" aria-hidden="true"></div>
+  </div>
+</div></section>
+
+<!-- COLEGIO -->
+<section class="view" id="v-colegio"><div class="wrap sec">
+  <h2>El colegio</h2>
+  <p class="lead">Ciencia, creatividad y compromiso para transformar mi comunidad.</p>
+  <ul class="steps">
+    <li><b>Institución</b>I.E.N.° 1260 “El Amauta”, UGEL 06.</li>
+    <li><b>Lugar</b>Huaycán, distrito de Ate, Lima.</li>
+    <li><b>Dirección</b>Av. San Marcos, Ate 15483. Código plus X5JJ+JV8.</li>
+    <li><b>Grado del portafolio</b>4.° de secundaria.</li>
+  </ul>
+  <h3 style="margin:26px 0 10px">Las seis áreas STEAM+H</h3>
+  <ul class="steps"><li><b>Ciencia</b>Preguntas, datos y evidencias.</li><li><b>Tecnología</b>Herramientas digitales y modelos 3D.</li><li><b>Ingeniería</b>Diseñar, construir y probar.</li><li><b>Arte</b>Bocetos, diseño y comunicación.</li><li><b>Matemática</b>Metas, gráficos y presupuestos.</li><li><b>Humanidades</b>Identidad, comunidad y reflexión.</li></ul>
+  <h3 style="margin:26px 0 10px">Fuentes que respaldan el trabajo</h3>
+  <p class="lead">MINEDU, CONCYTEC, MINSA, OPS/OMS y Google Académico, con referencias en formato APA.</p>
+</div></section>
+</main>
+
+<div class="lema">“Pequeñas ideas, grandes cambios para mi comunidad”</div>
+<footer><div class="wrap"><b>I.E.N.° 1260 “El Amauta”</b> · UGEL 06 · Huaycán, Ate<br>Av. San Marcos, Ate 15483 · X5JJ+JV8</div></footer>
+
+<script>
+var S=[
+{t:"Inicio",s:"Conocemos nuestro equipo",a:["Humanidades","Arte"],i:["Presentación del equipo","Nombre y logo","Lema y slide de bienvenida"],h:"Reúnete con tu equipo, elijan un nombre, diseñen un logo y escriban un lema.",f:"Ficha del equipo con logo y lema en la primera hoja de la carpeta.",d:"Slide de bienvenida y video de presentación.",e:"Identidad clara del equipo y participación de todos."},
+{t:"Mi ruta de futuro",s:"Quiénes somos y hacia dónde vamos",a:["Humanidades","Matemática"],i:["Autoconocimiento","Metas SMART","Carreras y oportunidades"],h:"Describe tus valores y fortalezas, y escribe metas a corto, mediano y largo plazo con plan de acción.",f:"Separadores Quién soy, Fortalezas y Metas.",d:"Perfil y metas en el tablero personal.",e:"Metas específicas, medibles y con fecha."},
+{t:"Explorar",s:"Conocemos y analizamos nuestro entorno",a:["Ciencia","Matemática"],i:["Problema de la comunidad","Pregunta retadora","Encuestas y análisis de datos"],h:"Observa tu comunidad, elige un problema, formula una pregunta retadora y recoge datos con encuestas.",f:"Fichas de observación y encuestas impresas.",d:"Formularios y gráficos con los datos.",e:"Problema bien descrito y datos bien analizados."},
+{t:"Diseñar",s:"Planificamos nuestras soluciones",a:["Ingeniería","Arte"],i:["Bocetos y alternativas","Selección de la mejor solución","Materiales y presupuesto"],h:"Dibuja varias ideas, compáralas, elige la mejor y calcula qué materiales necesitas y cuánto cuestan.",f:"Cuaderno de bocetos y lista de materiales.",d:"Fotos de los bocetos y hoja de presupuesto.",e:"Alternativas comparadas y elección justificada."},
+{t:"Construir",s:"Creamos nuestro prototipo",a:["Tecnología","Ingeniería"],i:["Prototipo físico o digital","Modelos 3D y diseño final","Registro fotográfico y video"],h:"Arma el prototipo (por ejemplo, un filtro de agua casero) y registra cada paso.",f:"Maqueta o prototipo del equipo.",d:"Modelo 3D, fotos y video del proceso.",e:"Prototipo funcional y proceso documentado."},
+{t:"Probar y mejorar",s:"Analizamos resultados y proponemos mejoras",a:["Ciencia","Matemática"],i:["Pruebas y datos","Dificultades y soluciones","Mejoras del prototipo"],h:"Prueba el prototipo, anota resultados en una tabla, grafica y propón mejoras.",f:"Tabla de resultados en el cuaderno.",d:"Gráficos y registro de mejoras.",e:"Datos confiables y mejoras con sustento."},
+{t:"Comunicar",s:"Compartimos nuestro aprendizaje",a:["Arte","Humanidades","Tecnología"],i:["Video de presentación","Feria de ciencias","Conclusiones e impacto"],h:"Prepara un video y un panel para la feria de ciencias. Explica el impacto en tu comunidad.",f:"Afiche o panel para la feria.",d:"Video de presentación del proyecto.",e:"Mensaje claro, creativo y con evidencias."},
+{t:"Evidencias de ciencia y tecnología",s:"Lo que aprendimos en las unidades 6 y 7",a:["Ciencia"],i:["Genética y origen de la vida y evolución","Infografías y mapas conceptuales","Informes científicos, videos y modelos"],h:"Reúne lo que produjiste en las unidades 6 (genética) y 7 (origen de la vida y evolución).",f:"Infografías e informes impresos.",d:"Archivos, videos y modelos en línea.",e:"Conceptos correctos y bien explicados."},
+{t:"Reflexiones",s:"Qué aprendimos y cómo mejoramos",a:["Humanidades"],i:["Autoevaluación y coevaluación","Logros, dificultades y cambios","Compromisos para el futuro"],h:"Escribe tu diario de aprendizaje, evalúate y evalúa a tu equipo, y fija compromisos.",f:"Diario de aprendizaje escrito a mano.",d:"Formulario de autoevaluación.",e:"Honestidad y capacidad de cambiar."},
+{t:"Fuentes y bibliografía",s:"Nuestras referencias confiables",a:["Humanidades","Tecnología"],i:["Referencias en formato APA","Fuentes científicas e institucionales","Créditos de imágenes y videos"],h:"Lista todas las fuentes que usaste (MINEDU, CONCYTEC, MINSA, OPS/OMS, Google Académico) y da créditos.",f:"Hoja de referencias al final de la carpeta.",d:"Lista de enlaces y créditos.",e:"Fuentes confiables bien citadas."}
+];
+var Q=[["¿Quién soy?","Identidad",["Valores","Intereses","Características personales"]],["¿Qué fortalezas poseo?","Autoestima y resiliencia",["Mis talentos","Mis logros","Cómo enfrento los retos"]],["¿Qué quiero lograr?","Metas personales, académicas y profesionales",["Corto, mediano y largo plazo","Plan de acción","Indicadores de logro"]],["¿Cuánto cuesta alcanzar mis metas?","Educación financiera",["Estimación de costos","Presupuesto personal","Ahorro e inversión"]],["¿Qué decisiones debo tomar?","Pensamiento estratégico",["Analizo opciones","Evalúo consecuencias","Elijo con información"]]];
+var QC=["#e8a21a","#7b4fd0","#1a8a95","#2a8f50","#cc3a52"];
+var AREAS=["Ciencia","Tecnología","Ingeniería","Arte","Matemática","Humanidades"];
+function $(id){return document.getElementById(id)}
+function esc(x){return x}
+/* mode */
+document.querySelectorAll(".switch button").forEach(function(b){b.addEventListener("click",function(){document.body.dataset.mode=b.dataset.m;document.querySelectorAll(".switch button").forEach(function(o){o.setAttribute("aria-pressed",o===b?"true":"false")});applyFilter()})});
+document.querySelectorAll(".switch button").forEach(function(b){b.addEventListener("click",function(){var m=b.dataset.m;$("hint").textContent=m==="fis"?"Mostrando solo lo de la carpeta física":m==="dig"?"Mostrando solo lo del tablero digital":""})});
+/* progress */
+var cur=0,done=[];
+try{done=JSON.parse(localStorage.getItem("ie1260")||"[]")}catch(e){done=[]}
+function save(){try{localStorage.setItem("ie1260",JSON.stringify(done))}catch(e){}}
+function body(s,i){return '<div class="tags">'+s.a.map(function(x){return '<span class="tag">'+x+'</span>'}).join("")+'</div><h4>Qué incluye</h4><ul>'+s.i.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul><h4>Qué hacer</h4><p style="margin:0">'+s.h+'</p><h4>Cómo se evalúa</h4><p style="margin:0">'+s.e+'</p><div class="where"><div class="fs"><b>Físico:</b> '+s.f+'</div><div class="dg"><b>Digital:</b> '+s.d+'</div></div>'}
+function stage(){
+  var s=S[cur];
+  $("stage").innerHTML='<div class="card" style="--c:var(--c'+(cur+1)+')"><h3><span class="n">'+(cur+1)+'</span>'+s.t+'</h3><p class="sub">'+s.s+'</p>'+body(s,cur)+'</div>';
+  $("dots").innerHTML=S.map(function(_,i){return '<button type="button" data-i="'+i+'" aria-label="Estación '+(i+1)+'"'+(i===cur?' aria-current="step"':'')+(done.indexOf(i)>-1?' class="done"':'')+'>'+(i+1)+'</button>'}).join("");
+  $("dots").querySelectorAll("button").forEach(function(b){b.onclick=function(){cur=+b.dataset.i;stage()}});
+  $("prev").disabled=cur===0;$("next").disabled=cur===S.length-1;
+  $("done").textContent=done.indexOf(cur)>-1?"Quitar marca":"Marcar como terminada";
+  $("pbar").style.width=(done.length*10)+"%";
+  $("pcount").textContent=done.length+" de 10 estaciones terminadas";
+}
+$("prev").onclick=function(){if(cur>0){cur--;stage()}};
+$("next").onclick=function(){if(cur<S.length-1){cur++;stage()}};
+$("done").onclick=function(){var k=done.indexOf(cur);if(k>-1)done.splice(k,1);else done.push(cur);save();stage()};
+/* free search */
+var fa="Todo";
+var ch=["Todo"].concat(AREAS);
+$("chips").innerHTML=ch.map(function(c){return '<button type="button" aria-pressed="'+(c==="Todo")+'">'+c+'</button>'}).join("");
+$("chips").querySelectorAll("button").forEach(function(b){b.onclick=function(){fa=b.textContent;$("chips").querySelectorAll("button").forEach(function(o){o.setAttribute("aria-pressed",o===b?"true":"false")});applyFilter()}});
+function norm(x){return x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+function applyFilter(){
+  var t=norm($("q").value.trim()),m=document.body.dataset.mode,n=0,h="";
+  S.forEach(function(s,i){
+    var txt=norm([s.t,s.s,s.i.join(" "),s.h,s.e,s.a.join(" "),m!=="dig"?s.f:"",m!=="fis"?s.d:""].join(" "));
+    if((fa==="Todo"||s.a.indexOf(fa)>-1)&&(!t||txt.indexOf(t)>-1)){n++;h+='<details style="--c:var(--c'+(i+1)+')"><summary><span class="n" style="width:34px;height:34px;font-size:1rem">'+(i+1)+'</span><div><h3>'+s.t+'</h3><span class="s">'+s.s+'</span></div></summary><div class="body">'+body(s,i)+'<div class="nav2"><a class="btn" style="text-decoration:none" href="#ordenado" data-go="'+i+'">Verla en el recorrido</a></div></div></details>'}
+  });
+  $("grid").innerHTML=h||'<div class="empty">No hay resultados. Prueba otra palabra o quita el filtro.</div>';
+  $("rc").textContent=n+" de 10 estaciones";
+  $("grid").querySelectorAll("[data-go]").forEach(function(a){a.addEventListener("click",function(){cur=+a.dataset.go})});
+}
+$("q").addEventListener("input",applyFilter);
+/* questions */
+$("qs").innerHTML=Q.map(function(q,i){return '<div class="q" style="--qc:'+QC[i]+'"><h3>'+q[0]+'</h3><p>'+q[1]+'</p><ul>'+q[2].map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div>'}).join("");
+/* budget */
+function calc(){
+  var v=["i1","i2","i3","i4"].map(function(k){return Math.max(0,+$(k).value||0)});
+  var inc=v[0],out=v[1]+v[2]+v[3],left=inc-out;
+  $("res").textContent=left>=0?"Te sobran S/ "+left+" al mes.":"Te faltan S/ "+(-left)+" al mes: revisa tus gastos.";
+  var tot=Math.max(inc,out)||1,cols=["#cc3a52","#2a8f50","#1f6fd1"];
+  $("bars").innerHTML=v.slice(1).map(function(x,i){return '<i style="width:'+(x/tot*100)+'%;background:'+cols[i]+'"></i>'}).join("");
+}
+["i1","i2","i3","i4"].forEach(function(k){$(k).addEventListener("input",calc)});
+/* routing */
+var V=["inicio","ordenado","libre","formatos","ruta","colegio"];
+function route(){
+  var h=(location.hash||"#inicio").slice(1);if(V.indexOf(h)<0)h="inicio";
+  document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("on",v.id==="v-"+h)});
+  document.querySelectorAll("nav a").forEach(function(a){if(a.getAttribute("href")==="#"+h)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  if(h==="ordenado")stage();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+applyFilter();calc();stage();route();
+</script>
+</body>
+</html>
